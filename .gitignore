@@ -1,4 +1,7 @@
 malware/
 
 # *.zip
-# *.malware
+*.malware
+*.exe
+*.dll
+*.bin
