@@ -1,0 +1,83 @@
+rule Strings_apostle
+{
+meta:
+description = "strings asociadas a Apostle"
+version = "1.0"
+
+
+strings:
+$s1 = "Apostle.exe" ascii 
+$s2 = "FileSystemInfo" ascii 
+$s3 = "GUID" ascii 
+$s4 = "FileAttributes" ascii 
+$s5 = "mscorlib" ascii 
+
+condition:
+uint16(0) == 0x5A4D and
+pe.data_directories[14].virtual_address != 0 and
+5 of ($s*)
+}
+
+
+
+rule Borrado_archivos_apostle
+{
+    meta:
+        description = "Patrón de borrado de archivos"
+       version = "1.0"
+
+    strings:
+        $w1 = "RNGCryptoServiceProvider" ascii 
+        $w2 = "fileStream.Write" ascii 
+        $w3 = "fileStream.SetLength(0L)" ascii 
+        $w4 = "File.SetAttributes" ascii 
+        $w5 = "FileAttributes.Normal" ascii 
+        $w6 = "fileInfo.Delete()" ascii 
+        $w7 = "File.SetCreationTimeUtc" ascii 
+        $w8 = "File.SetLastAccessTimeUtc" ascii
+        $w9 = "File.SetLastWriteTimeUtc" ascii 
+        
+    condition:
+        6 of ($w*)
+}
+
+
+
+rule Apostle_Ransom 
+{
+    meta:
+        description = "Detecta cifrado AES de Apostle"
+        version = "1.0"
+
+    strings:
+        $s1 = "RijndaelManaged"
+        $s2 = "KeySize"
+        $s3 = { 01 02 03 04 05 06 07 08 } 
+        $s4 = "CipherMode"
+
+    condition:
+        uint16(0) == 0x5A4D and all of ($s*)
+}
+
+
+
+
+
+rule detectar_IPSecHelper
+{
+    meta:
+        description = "Detecta IPsec Helper"
+        version = "1.0"
+
+    strings:
+        $s1 = "Apostle.exe"
+        $s2 = "AdjustTokenPrivileges"
+        $s3 = "LookupPrivilegeValue"
+        $s4 = "System.ServiceProcess"
+
+    condition:
+        uint16(0) == 0x5A4D and 3 of ($s*)
+}
+
+
+
