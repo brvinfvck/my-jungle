@@ -1,0 +1,31 @@
+Nombres de la muestra:
+- Apostle.exe 
+- alldata-3.5.exe
+
+Tipo de archivo:
+PE32 ejecutable escrito en .NET
+
+Familia:
+- Apostle
+
+Autor:
+- Grupo Agrius APT
+
+Tipo de malware:
+- Híbrido ransomware-wiper
+
+Capacidades:
+- Wiper: destrucción de los datos
+- Ransomware: cifrado mediante clase RijndaelManaged y RNGCryptoService Provider
+- Técnicas antiforense : ofuscación del código, auto borrado
+-Persistencia: IPsec Helper backdoor, herramienta de acceso remoto post-explotación
+
+
+Breve descripción:
+
+La muestra analizada corresponde a Apostle, un malware asociado al grupo Agrius. Está desarrollado en .NET y emplea técnicas básicas de ofuscación,
+fácilmente revertibles mediante herramientas como de4dot.
+
+En base a informes y la información recabada, el binario emplea mecanismos para garantizar ejecución única mediante un mutex global y tiene métodos
+para la destrucción total o  parcial de archivos, uso de cifrado RSA y borrado seguro.
+Además, modifica las marcas de tiempo de los archivos.
